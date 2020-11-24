@@ -32,6 +32,7 @@ namespace EditorSnake
             this.btnTrasferello = new System.Windows.Forms.Button();
             this.btnReset = new System.Windows.Forms.Button();
             this.pnlGestioneBottoni = new System.Windows.Forms.Panel();
+            this.pnlCampoGioco = new System.Windows.Forms.Panel();
             this.pnlGestioneBottoni.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -67,6 +68,14 @@ namespace EditorSnake
             this.pnlGestioneBottoni.Size = new System.Drawing.Size(1405, 169);
             this.pnlGestioneBottoni.TabIndex = 2;
             // 
+            // pnlCampoGioco
+            // 
+            this.pnlCampoGioco.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlCampoGioco.Location = new System.Drawing.Point(0, 0);
+            this.pnlCampoGioco.Name = "pnlCampoGioco";
+            this.pnlCampoGioco.Size = new System.Drawing.Size(1405, 660);
+            this.pnlCampoGioco.TabIndex = 3;
+            // 
             // frmEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -74,6 +83,7 @@ namespace EditorSnake
             this.AutoScroll = true;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1405, 829);
+            this.Controls.Add(this.pnlCampoGioco);
             this.Controls.Add(this.pnlGestioneBottoni);
             this.Name = "frmEditor";
             this.Text = "EditorSnake";
@@ -89,6 +99,7 @@ namespace EditorSnake
         private System.Windows.Forms.Button btnTrasferello;
         private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.Panel pnlGestioneBottoni;
+        private System.Windows.Forms.Panel pnlCampoGioco;
     }
 }
 

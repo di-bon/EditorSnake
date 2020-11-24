@@ -7,12 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace EditorSnake
 {
     public partial class frmEditor : Form
     {
-        //25, 17 è la dimensione del campo medio
+        //25, 17 è la dimensione del campo medio, in caso si può fare un menu per fare l'editor anche del campo piccolo e di quello grande
         private int[,] mat = new int[25, 17];
         private int sizeButton = 64;
         public frmEditor()
@@ -20,6 +21,11 @@ namespace EditorSnake
             InitializeComponent();
         }
 
+        /// <summary>
+        /// load dell'editor. viene inizializzata la matrice e stampati i bottoni
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void frmEditor_Load(object sender, EventArgs e)
         {
             InizializzaMatriceCampo(GetMatWidth(), GetMatHeight());
@@ -27,6 +33,11 @@ namespace EditorSnake
             ResizeButtons();
         }
 
+        /// <summary>
+        /// inizializzazione del campo gioco. 0 = libero, 1 = muro
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
         private void InizializzaMatriceCampo(int width, int height)
         {
             for (int i = 0; i < width; i++)
@@ -38,8 +49,15 @@ namespace EditorSnake
             }
         }
 
+        /// <summary>
+        /// viene cancellato tutto il contenuto del pannello che contiene il campo gioco, successivamente vengono generati i bottoni corrispondenti ad ogni cella della matrice
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
         private void GeneraCampo(int width, int height)
         {
+            DrawingControl.SuspendDrawing(pnlCampoGioco);
+            pnlCampoGioco.Controls.Clear();
             for (int i = 0; i < width; i++)
             {
                 for (int j = 0; j < height; j++)
@@ -65,21 +83,35 @@ namespace EditorSnake
                             b.BackColor = Color.Black;
                         }
                     };
-                    this.Controls.Add(b);
+                    pnlCampoGioco.Controls.Add(b);
                 }
             }
+            DrawingControl.ResumeDrawing(pnlCampoGioco);
         }
 
+        /// <summary>
+        /// ritorna la larghezza della matrice (x)
+        /// </summary>
+        /// <returns></returns>
         private int GetMatWidth()
         {
             return mat.GetLength(0);
         }
 
+        /// <summary>
+        /// ritorna l'altezza della matrice (y)
+        /// </summary>
+        /// <returns></returns>
         private int GetMatHeight()
         {
             return mat.GetLength(1);
         }
 
+        /// <summary>
+        /// scrive nel file json. per debug stampa la matrice con Console.Write()
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnTrasferello_Click(object sender, EventArgs e)
         {
             Console.Write("\n");
@@ -99,31 +131,30 @@ namespace EditorSnake
             }
         }
 
+        /// <summary>
+        /// imposta la larghezza dei due bottoni inferiori. metà schermo a ciascuno
+        /// </summary>
         private void ResizeButtons()
         {
             btnTrasferello.Size = new Size(pnlGestioneBottoni.Size.Width / 2, pnlGestioneBottoni.Size.Height);
             btnReset.Size = new Size(pnlGestioneBottoni.Size.Width / 2, pnlGestioneBottoni.Size.Height);
         }
 
-        private void RipristinaCampo()
-        {
-            for (int i = 0; i < GetMatWidth(); i++)
-            {
-                for (int j = 0; j < GetMatHeight(); j++)
-                {
-                    if (mat[i, j] != 0)
-                    {
-                        
-                    }
-                }
-            }
-        }
-
+        /// <summary>
+        /// viene aggiornata la larghezza dei bottoni inferiori se viene modificata la grandezza della finestra
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void frmEditor_SizeChanged(object sender, EventArgs e)
         {
             ResizeButtons();
         }
 
+        /// <summary>
+        /// resetta tutta la matrice a 0
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnReset_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Vuoi davvero ripristinare tutto il campo gioco? Le modifiche non salvate andranno perdute",
@@ -131,13 +162,32 @@ namespace EditorSnake
                 MessageBoxButtons.OKCancel,
                 MessageBoxIcon.Question) == DialogResult.OK)
             {
-                /*
                 InizializzaMatriceCampo(GetMatWidth(), GetMatHeight());
                 GeneraCampo(GetMatWidth(), GetMatHeight());
-                */
 
-                RipristinaCampo();
             }
+        }
+    }
+
+    /// <summary>
+    /// classe per evitare lo sfarfallio durante il disegno
+    /// </summary>
+    class DrawingControl
+    {
+        [DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, Int32 wMsg, bool wParam, Int32 lParam);
+
+        private const int WM_SETREDRAW = 11;
+
+        public static void SuspendDrawing(Control parent)
+        {
+            SendMessage(parent.Handle, WM_SETREDRAW, false, 0);
+        }
+
+        public static void ResumeDrawing(Control parent)
+        {
+            SendMessage(parent.Handle, WM_SETREDRAW, true, 0);
+            parent.Refresh();
         }
     }
 }
