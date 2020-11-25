@@ -116,6 +116,8 @@ namespace EditorSnake
         /// <param name="e"></param>
         private void btnTrasferello_Click(object sender, EventArgs e)
         {
+            //Debug
+            /*
             Console.Write("\n");
             for (int i = 0; i < GetMatWidth(); i++)
             {
@@ -131,6 +133,7 @@ namespace EditorSnake
                 }
                 Console.Write("\n");
             }
+            */
 
             List<Muro> lstMuro = new List<Muro>();
             for (int j = 0; j < GetMatHeight(); j++)
@@ -151,6 +154,7 @@ namespace EditorSnake
             try
             {
                 File.Open("json1.json", FileMode.Open);
+                //File.WriteAllText("json1.json", file);
             }
             catch (System.IO.FileNotFoundException)
             {
@@ -160,9 +164,11 @@ namespace EditorSnake
             {
                 MessageBox.Show("MA che???", "???", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+            // /*
             try
             {
-                File.WriteAllText("json1.json", file);
+                File.WriteAllText(@"json1.json", file);
             }
             catch (System.IO.FileNotFoundException)
             {
@@ -172,6 +178,7 @@ namespace EditorSnake
             {
                 Console.WriteLine("Che razza di errore è questo??");
             }
+            // */
         }
 
         /// <summary>
@@ -202,8 +209,8 @@ namespace EditorSnake
         {
             if (MessageBox.Show("Vuoi davvero ripristinare tutto il campo gioco? Le modifiche non salvate andranno perdute",
                 "Conferma",
-                MessageBoxButtons.OKCancel,
-                MessageBoxIcon.Question) == DialogResult.OK)
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 InizializzaMatriceCampo(GetMatWidth(), GetMatHeight());
                 GeneraCampo(GetMatWidth(), GetMatHeight());
