@@ -148,7 +148,26 @@ namespace EditorSnake
             }
             string file = JsonConvert.SerializeObject(lstMuro);
             Console.WriteLine(file);
-            File.WriteAllText(@"prova.json", file);
+            try
+            {
+                File.Open("prova.json", FileMode.Open);
+            }
+            catch (System.IO.FileNotFoundException)
+            {
+                MessageBox.Show("File di salvataggio non trovato :/", "Errore durante il salvataggio", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (System.IO.IOException)
+            {
+                MessageBox.Show("MA che???", "???", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            try
+            {
+                File.WriteAllText("prova.json", file);
+            }
+            catch (System.IO.IOException)
+            {
+                Console.WriteLine("Che razza di errore è questo??");
+            }
         }
 
         /// <summary>
