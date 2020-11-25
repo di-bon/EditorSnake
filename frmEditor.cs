@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace EditorSnake
 {
@@ -129,6 +131,24 @@ namespace EditorSnake
                 }
                 Console.Write("\n");
             }
+
+            List<Muro> lstMuro = new List<Muro>();
+            for (int j = 0; j < GetMatHeight(); j++)
+            {
+                for (int i  = 0; i < GetMatWidth(); i++)
+                {
+                    if (mat[i, j] == 1)
+                    {
+                        Muro muro = new Muro();
+                        muro.X = i;
+                        muro.Y = j;
+                        lstMuro.Add(muro);
+                    }
+                }
+            }
+            string file = JsonConvert.SerializeObject(lstMuro);
+            Console.WriteLine(file);
+            
         }
 
         /// <summary>
@@ -164,7 +184,6 @@ namespace EditorSnake
             {
                 InizializzaMatriceCampo(GetMatWidth(), GetMatHeight());
                 GeneraCampo(GetMatWidth(), GetMatHeight());
-
             }
         }
     }

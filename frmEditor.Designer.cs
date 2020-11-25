@@ -70,6 +70,7 @@ namespace EditorSnake
             // 
             // pnlCampoGioco
             // 
+            this.pnlCampoGioco.AutoScroll = true;
             this.pnlCampoGioco.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlCampoGioco.Location = new System.Drawing.Point(0, 0);
             this.pnlCampoGioco.Name = "pnlCampoGioco";
