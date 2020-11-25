@@ -148,7 +148,7 @@ namespace EditorSnake
             }
             string file = JsonConvert.SerializeObject(lstMuro);
             Console.WriteLine(file);
-            
+            //File.WriteAllText("prova.json", file);
         }
 
         /// <summary>

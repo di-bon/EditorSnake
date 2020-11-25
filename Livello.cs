@@ -15,16 +15,21 @@ namespace EditorSnake
     }
     public class Muro
     {
-        public int x;
-        public int y;
+        public int _x;
+        public int _y;
+
+        public Muro()
+        {
+            //serve davvero?
+        }
 
         public int X
         {
-            set { x = value; }
+            set { _x = value; }
         }
         public int Y
         {
-            set { y = value; }
+            set { _y = value; }
         }
     }
 }
