@@ -150,7 +150,7 @@ namespace EditorSnake
             Console.WriteLine(file);
             try
             {
-                File.Open("prova.json", FileMode.Open);
+                File.Open("json1.json", FileMode.Open);
             }
             catch (System.IO.FileNotFoundException)
             {
@@ -162,7 +162,11 @@ namespace EditorSnake
             }
             try
             {
-                File.WriteAllText("prova.json", file);
+                File.WriteAllText("json1.json", file);
+            }
+            catch (System.IO.FileNotFoundException)
+            {
+                Console.WriteLine("bla bla bla");
             }
             catch (System.IO.IOException)
             {
