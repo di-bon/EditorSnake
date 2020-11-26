@@ -36,8 +36,8 @@ namespace EditorSnake
 
         public Livello()
         {
-            //numLev = 
             posMuri = new List<Muro>();
+            //numLev = ???
         }
     }
 

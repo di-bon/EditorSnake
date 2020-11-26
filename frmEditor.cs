@@ -150,14 +150,18 @@ namespace EditorSnake
                     }
                 }
             }
-            livello.numLev = 2;
+
+            //livello.numLev = 2;   //prova
+             
+            //livello.numLev = int.Parse(System.IO.File.ReadAllText("numLev.txt")); //Usare qualcosa di simile per tenere conto del numero dei livelli crescente
+
             //Root root = new Root();
             //root.livelli.Add(livello);
 
             string strSerializedForJson = JsonConvert.SerializeObject(livello);
 
             //Console.WriteLine(file);  //Debug
-            
+
             try
             {
                 File.AppendAllText(@"json1.json", strSerializedForJson);
