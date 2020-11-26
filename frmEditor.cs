@@ -18,6 +18,7 @@ namespace EditorSnake
         //25, 17 è la dimensione del campo medio, in caso si può fare un menu per fare l'editor anche del campo piccolo e di quello grande
         private int[,] mat = new int[25, 17];
         private int sizeButton = 64;
+        private Root root;
         public frmEditor()
         {
             InitializeComponent();
@@ -33,6 +34,7 @@ namespace EditorSnake
             InizializzaMatriceCampo(GetMatWidth(), GetMatHeight());
             GeneraCampo(GetMatWidth(), GetMatHeight());
             ResizeButtons();
+            root = new Root();
         }
 
         /// <summary>
@@ -151,16 +153,44 @@ namespace EditorSnake
                 }
             }
 
-            //livello.numLev = 2;   //prova
-             
+            livello.numLev = 2;   //prova
+
+            root.livelli.Add(livello);
+
             //livello.numLev = int.Parse(System.IO.File.ReadAllText("numLev.txt")); //Usare qualcosa di simile per tenere conto del numero dei livelli crescente
 
             //Root root = new Root();
             //root.livelli.Add(livello);
 
-            string strSerializedForJson = JsonConvert.SerializeObject(livello);
+            //string strSerializedForJson = JsonConvert.SerializeObject(livello);
 
             //Console.WriteLine(file);  //Debug
+
+
+            //Per il momento il file viene scritto solo quando si chiude la form, bisogna trovare il modo di 1. aggiungere al file già esistente oppure 2. copiare tutto quello che c'è già, aggiungere e riscrivere
+
+            /*
+            try
+            {
+                File.AppendAllText(@"json1.json", strSerializedForJson);
+            }
+            catch (System.IO.FileNotFoundException fe)
+            {
+                Console.WriteLine(fe.Message, "Errore", MessageBoxIcon.Error, MessageBoxButtons.OK);
+            }
+            catch (System.IO.IOException fe)
+            {
+                Console.WriteLine(fe.Message, "Errore", MessageBoxIcon.Error, MessageBoxButtons.OK);
+            }
+            */
+            
+            InizializzaMatriceCampo(GetMatWidth(), GetMatHeight());
+            GeneraCampo(GetMatWidth(), GetMatHeight());
+        }
+
+        private void frmEditor_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            string strSerializedForJson = JsonConvert.SerializeObject(root);
 
             try
             {

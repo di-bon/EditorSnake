@@ -88,6 +88,7 @@ namespace EditorSnake
             this.Controls.Add(this.pnlGestioneBottoni);
             this.Name = "frmEditor";
             this.Text = "EditorSnake";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmEditor_FormClosing);
             this.Load += new System.EventHandler(this.frmEditor_Load);
             this.SizeChanged += new System.EventHandler(this.frmEditor_SizeChanged);
             this.pnlGestioneBottoni.ResumeLayout(false);
