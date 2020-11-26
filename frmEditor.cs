@@ -117,6 +117,7 @@ namespace EditorSnake
         private void btnTrasferello_Click(object sender, EventArgs e)
         {
             //Debug
+
             /*
             Console.Write("\n");
             for (int i = 0; i < GetMatWidth(); i++)
@@ -135,7 +136,7 @@ namespace EditorSnake
             }
             */
 
-            List<Muro> lstMuro = new List<Muro>();
+            Livello livello = new Livello();
             for (int j = 0; j < GetMatHeight(); j++)
             {
                 for (int i  = 0; i < GetMatWidth(); i++)
@@ -145,40 +146,30 @@ namespace EditorSnake
                         Muro muro = new Muro();
                         muro.X = i;
                         muro.Y = j;
-                        lstMuro.Add(muro);
+                        livello.posMuri.Add(muro);
                     }
                 }
             }
-            string file = JsonConvert.SerializeObject(lstMuro);
-            Console.WriteLine(file);
-            try
-            {
-                File.Open("json1.json", FileMode.Open);
-                //File.WriteAllText("json1.json", file);
-            }
-            catch (System.IO.FileNotFoundException)
-            {
-                MessageBox.Show("File di salvataggio non trovato :/", "Errore durante il salvataggio", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (System.IO.IOException)
-            {
-                MessageBox.Show("MA che???", "???", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            livello.numLev = 2;
+            //Root root = new Root();
+            //root.livelli.Add(livello);
 
-            // /*
+            string strSerializedForJson = JsonConvert.SerializeObject(livello);
+
+            //Console.WriteLine(file);  //Debug
+            
             try
             {
-                File.WriteAllText(@"json1.json", file);
+                File.AppendAllText(@"json1.json", strSerializedForJson);
             }
-            catch (System.IO.FileNotFoundException)
+            catch (System.IO.FileNotFoundException fe)
             {
-                Console.WriteLine("bla bla bla");
+                Console.WriteLine(fe.Message, "Errore", MessageBoxIcon.Error, MessageBoxButtons.OK);
             }
-            catch (System.IO.IOException)
+            catch (System.IO.IOException fe)
             {
-                Console.WriteLine("Che razza di errore è questo??");
+                Console.WriteLine(fe.Message, "Errore", MessageBoxIcon.Error, MessageBoxButtons.OK);
             }
-            // */
         }
 
         /// <summary>

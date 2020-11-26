@@ -9,10 +9,6 @@ using Newtonsoft.Json;
 
 namespace EditorSnake
 {
-    public class Livello
-    {
-        public static int numLev;
-    }
     public class Muro
     {
         public int _x;
@@ -26,10 +22,32 @@ namespace EditorSnake
         public int X
         {
             set { _x = value; }
+            
         }
         public int Y
         {
             set { _y = value; }
+        }
+    }
+    public class Livello
+    {
+        public int numLev;
+        public IList<Muro> posMuri;
+
+        public Livello()
+        {
+            //numLev = 
+            posMuri = new List<Muro>();
+        }
+    }
+
+    public class Root
+    {
+        public IList<Livello> livelli;
+
+        public Root()
+        {
+            livelli = new List<Livello>();
         }
     }
 }
