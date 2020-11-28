@@ -79,7 +79,6 @@ namespace EditorSnake
             this.btnSalva.TabIndex = 2;
             this.btnSalva.Text = "Salva";
             this.btnSalva.UseVisualStyleBackColor = true;
-            this.btnSalva.Click += new System.EventHandler(this.btnSalva_Click);
             // 
             // pnlCampoGioco
             // 

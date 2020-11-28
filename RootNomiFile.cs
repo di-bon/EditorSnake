@@ -10,30 +10,50 @@ namespace EditorSnake
 {
     class RootNomiFile
     {
-        public List<string> nomeFileDaLeggere;
+        public IList<string> nomeFileDaLeggere;
 
         public RootNomiFile()
         {
             nomeFileDaLeggere = new List<string>();
-            StreamReader reader = new StreamReader("nomi_livelli.json");
-            JsonConvert.DeserializeObject<RootNomiFile>(reader.ReadToEnd());
-            reader.Close();
-        }
-
-        public void SalvaFileNomiLivelli()
-        {
-            string classeSerialized = JsonConvert.SerializeObject(this);
+            /*
             try
             {
-                File.WriteAllText(@"nomi_livelli.json", classeSerialized);
+                StreamReader reader = new StreamReader("indice_livelli.json");
+                JsonConvert.DeserializeObject<RootNomiFile>(reader.ReadToEnd());
+                reader.Close();
             }
             catch (System.IO.FileNotFoundException e)
             {
                 Console.WriteLine(e.Message);
             }
+            catch (System.StackOverflowException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            */
+        }
+
+        /// <summary>
+        /// salva i nomi dei livelli all'interno della cartella "levels"
+        /// </summary>
+        /// <returns></returns>
+        public int SalvaFileNomiLivelli()
+        {
+            string classeSerialized = JsonConvert.SerializeObject(this);
+            try
+            {
+                File.WriteAllText(@"levels/indice_livelli.json", classeSerialized);
+                return 0;
+            }
+            catch (System.IO.FileNotFoundException e)
+            {
+                Console.WriteLine(e.Message);
+                return 1;
+            }
             catch (System.IO.IOException e)
             {
                 Console.WriteLine(e.Message);
+                return 2;
             }
         }
     }

@@ -18,7 +18,8 @@ namespace EditorSnake
         //25, 17 è la dimensione del campo medio, in caso si può fare un menu per fare l'editor anche del campo piccolo e di quello grande
         private int[,] mat = new int[25, 17];
         private int sizeButton = 64;
-        private Root root;
+        //private Root root;
+        private RootNomiFile rootNomiFile;
         public frmEditor()
         {
             InitializeComponent();
@@ -34,7 +35,26 @@ namespace EditorSnake
             InizializzaMatriceCampo(GetMatWidth(), GetMatHeight());
             GeneraCampo(GetMatWidth(), GetMatHeight());
             ResizeButtons();
-            root = new Root();
+            //root = new Root();
+            rootNomiFile = new RootNomiFile();
+            try
+            {
+                StreamReader reader = new StreamReader("levels/indice_livelli.json");
+                rootNomiFile = JsonConvert.DeserializeObject<RootNomiFile>(reader.ReadToEnd());
+                reader.Close();
+            }
+            catch (System.IO.FileNotFoundException fe)
+            {
+                Console.WriteLine(fe.Message);
+            }
+            catch   (System.IO.IOException fe)
+            {
+                Console.WriteLine(fe.Message);
+            }
+            catch (System.StackOverflowException fe)
+            {
+                Console.WriteLine(fe.Message);
+            }
         }
 
         /// <summary>
@@ -138,7 +158,9 @@ namespace EditorSnake
             }
             */
 
-            Livello livello = new Livello(root.livelli.Count);
+            //Livello livello = new Livello(root.livelli.Count);
+            Livello livello = new Livello(rootNomiFile.nomeFileDaLeggere.Count);
+
             for (int j = 0; j < GetMatHeight(); j++)
             {
                 for (int i  = 0; i < GetMatWidth(); i++)
@@ -154,10 +176,34 @@ namespace EditorSnake
             }
 
             string nomeNextLevel = "livello" + livello.numLev + ".json";
-            //Console.WriteLine(nomeNextLevel); //Debug
-            SalvaSuFile(livello, nomeNextLevel);
+            int errorMessageLevel = SalvaSuFile(livello, nomeNextLevel);
+            switch (errorMessageLevel)
+            {
+                case 0:
+                    MessageBox.Show("Livello salvato correttamente", "Livello salvato", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    break;
+                case 1:
+                    MessageBox.Show("Impossibile trovate il percorso per il salvataggio del file", "Errore durante il salvataggio", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    break;
+                case 2:
+                    MessageBox.Show("Errore ignoto durante il salvataggio del livello", "Errore durante il salvataggio", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    break;
+            }
+            rootNomiFile.nomeFileDaLeggere.Add(nomeNextLevel);
+            int errorMessageIndice = rootNomiFile.SalvaFileNomiLivelli();
+            switch (errorMessageIndice)
+            {
+                case 0:
+                    break;
+                case 1:
+                    MessageBox.Show("Impossibile trovate il percorso per il salvataggio del file di gestione dei livelli", "Errore durante il salvataggio", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    break;
+                case 2:
+                    MessageBox.Show("Errore ignoto durante l'aggiornamento del file degli indici dei livelli", "Errore durante il salvataggio", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    break;
+            }
 
-            root.livelli.Add(livello);
+            //root.livelli.Add(livello);
 
             //livello.numLev = int.Parse(System.IO.File.ReadAllText("numLev.txt")); //Usare qualcosa di simile per tenere conto del numero dei livelli crescente
 
@@ -187,21 +233,30 @@ namespace EditorSnake
             */
         }
 
-        private void SalvaSuFile(Livello level, string nomeFile)
+        /// <summary>
+        /// salva il file di livello all'interno della cartella "levels". Ritorna 0 se l'operazione viene completata, altrimenti si è verificato un errore
+        /// </summary>
+        /// <param name="level"></param>
+        /// <param name="nomeFile"></param>
+        /// <returns></returns>
+        private int SalvaSuFile(Livello level, string nomeFile)
         {
             string strSerializedForJson = JsonConvert.SerializeObject(level);
-
+            string path = "levels/" + nomeFile;
             try
             {
-                File.AppendAllText(@nomeFile, strSerializedForJson);
+                File.AppendAllText(@path, strSerializedForJson);
+                return 0;
             }
             catch (System.IO.FileNotFoundException fe)
             {
                 Console.WriteLine(fe.Message, "Errore", MessageBoxIcon.Error, MessageBoxButtons.OK);
+                return 1;
             }
             catch (System.IO.IOException fe)
             {
-                 Console.WriteLine(fe.Message, "Errore", MessageBoxIcon.Error, MessageBoxButtons.OK);
+                Console.WriteLine(fe.Message, "Errore", MessageBoxIcon.Error, MessageBoxButtons.OK);
+                return 2;
             }
         }
 
@@ -242,10 +297,12 @@ namespace EditorSnake
             }
         }
 
+        /*
         private void btnSalva_Click(object sender, EventArgs e)
         {
-
+            rootNomiFile.SalvaFileNomiLivelli();
         }
+        */
     }
 
     /// <summary>
