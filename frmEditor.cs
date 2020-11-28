@@ -138,7 +138,7 @@ namespace EditorSnake
             }
             */
 
-            Livello livello = new Livello();
+            Livello livello = new Livello(root.livelli.Count);
             for (int j = 0; j < GetMatHeight(); j++)
             {
                 for (int i  = 0; i < GetMatWidth(); i++)
@@ -153,7 +153,9 @@ namespace EditorSnake
                 }
             }
 
-            livello.numLev = 2;   //prova
+            string nomeNextLevel = "livello" + livello.numLev + ".json";
+            //Console.WriteLine(nomeNextLevel); //Debug
+            SalvaSuFile(livello, nomeNextLevel);
 
             root.livelli.Add(livello);
 
@@ -183,18 +185,15 @@ namespace EditorSnake
                 Console.WriteLine(fe.Message, "Errore", MessageBoxIcon.Error, MessageBoxButtons.OK);
             }
             */
-            
-            InizializzaMatriceCampo(GetMatWidth(), GetMatHeight());
-            GeneraCampo(GetMatWidth(), GetMatHeight());
         }
 
-        private void frmEditor_FormClosing(object sender, FormClosingEventArgs e)
+        private void SalvaSuFile(Livello level, string nomeFile)
         {
-            string strSerializedForJson = JsonConvert.SerializeObject(root);
+            string strSerializedForJson = JsonConvert.SerializeObject(level);
 
             try
             {
-                File.AppendAllText(@"json1.json", strSerializedForJson);
+                File.AppendAllText(@nomeFile, strSerializedForJson);
             }
             catch (System.IO.FileNotFoundException fe)
             {
@@ -202,7 +201,7 @@ namespace EditorSnake
             }
             catch (System.IO.IOException fe)
             {
-                Console.WriteLine(fe.Message, "Errore", MessageBoxIcon.Error, MessageBoxButtons.OK);
+                 Console.WriteLine(fe.Message, "Errore", MessageBoxIcon.Error, MessageBoxButtons.OK);
             }
         }
 
@@ -211,8 +210,9 @@ namespace EditorSnake
         /// </summary>
         private void ResizeButtons()
         {
-            btnTrasferello.Size = new Size(pnlGestioneBottoni.Size.Width / 2, pnlGestioneBottoni.Size.Height);
-            btnReset.Size = new Size(pnlGestioneBottoni.Size.Width / 2, pnlGestioneBottoni.Size.Height);
+            btnTrasferello.Size = new Size(pnlGestioneBottoni.Size.Width / 3, pnlGestioneBottoni.Size.Height);
+            btnSalva.Size = new Size(pnlGestioneBottoni.Size.Width / 3, pnlGestioneBottoni.Size.Height);
+            btnReset.Size = new Size(pnlGestioneBottoni.Size.Width / 3, pnlGestioneBottoni.Size.Height);
         }
 
         /// <summary>
@@ -240,6 +240,11 @@ namespace EditorSnake
                 InizializzaMatriceCampo(GetMatWidth(), GetMatHeight());
                 GeneraCampo(GetMatWidth(), GetMatHeight());
             }
+        }
+
+        private void btnSalva_Click(object sender, EventArgs e)
+        {
+
         }
     }
 

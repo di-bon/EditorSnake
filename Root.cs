@@ -9,41 +9,9 @@ using Newtonsoft.Json;
 
 namespace EditorSnake
 {
-    public class Muro
-    {
-        public int _x;
-        public int _y;
-
-        public Muro()
-        {
-            //serve davvero?
-        }
-
-        public int X
-        {
-            set { _x = value; }
-            
-        }
-        public int Y
-        {
-            set { _y = value; }
-        }
-    }
-    public class Livello
-    {
-        public int numLev;
-        public IList<Muro> posMuri;
-
-        public Livello()
-        {
-            posMuri = new List<Muro>();
-            //numLev = ???
-        }
-    }
-
     public class Root
     {
-        public IList<Livello> livelli;
+        public List<Livello> livelli;
 
         public Root()
         {
