@@ -32,7 +32,6 @@ namespace EditorSnake
             this.btnTrasferello = new System.Windows.Forms.Button();
             this.btnReset = new System.Windows.Forms.Button();
             this.pnlGestioneBottoni = new System.Windows.Forms.Panel();
-            this.btnSalva = new System.Windows.Forms.Button();
             this.pnlCampoGioco = new System.Windows.Forms.Panel();
             this.pnlGestioneBottoni.SuspendLayout();
             this.SuspendLayout();
@@ -61,7 +60,6 @@ namespace EditorSnake
             // 
             // pnlGestioneBottoni
             // 
-            this.pnlGestioneBottoni.Controls.Add(this.btnSalva);
             this.pnlGestioneBottoni.Controls.Add(this.btnReset);
             this.pnlGestioneBottoni.Controls.Add(this.btnTrasferello);
             this.pnlGestioneBottoni.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -69,16 +67,6 @@ namespace EditorSnake
             this.pnlGestioneBottoni.Name = "pnlGestioneBottoni";
             this.pnlGestioneBottoni.Size = new System.Drawing.Size(1405, 169);
             this.pnlGestioneBottoni.TabIndex = 2;
-            // 
-            // btnSalva
-            // 
-            this.btnSalva.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnSalva.Location = new System.Drawing.Point(428, 0);
-            this.btnSalva.Name = "btnSalva";
-            this.btnSalva.Size = new System.Drawing.Size(486, 169);
-            this.btnSalva.TabIndex = 2;
-            this.btnSalva.Text = "Salva";
-            this.btnSalva.UseVisualStyleBackColor = true;
             // 
             // pnlCampoGioco
             // 
@@ -113,7 +101,6 @@ namespace EditorSnake
         private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.Panel pnlGestioneBottoni;
         private System.Windows.Forms.Panel pnlCampoGioco;
-        private System.Windows.Forms.Button btnSalva;
     }
 }
 

@@ -18,7 +18,6 @@ namespace EditorSnake
         //25, 17 è la dimensione del campo medio, in caso si può fare un menu per fare l'editor anche del campo piccolo e di quello grande
         private int[,] mat = new int[25, 17];
         private int sizeButton = 64;
-        //private Root root;
         private RootNomiFile rootNomiFile;
         public frmEditor()
         {
@@ -35,7 +34,6 @@ namespace EditorSnake
             InizializzaMatriceCampo(GetMatWidth(), GetMatHeight());
             GeneraCampo(GetMatWidth(), GetMatHeight());
             ResizeButtons();
-            //root = new Root();
             rootNomiFile = new RootNomiFile();
             try
             {
@@ -157,10 +155,7 @@ namespace EditorSnake
                 Console.Write("\n");
             }
             */
-
-            //Livello livello = new Livello(root.livelli.Count);
             Livello livello = new Livello(rootNomiFile.nomeFileDaLeggere.Count);
-
             for (int j = 0; j < GetMatHeight(); j++)
             {
                 for (int i  = 0; i < GetMatWidth(); i++)
@@ -174,7 +169,6 @@ namespace EditorSnake
                     }
                 }
             }
-
             string nomeNextLevel = "livello" + livello.numLev + ".json";
             int errorMessageLevel = SalvaSuFile(livello, nomeNextLevel);
             switch (errorMessageLevel)
@@ -203,18 +197,6 @@ namespace EditorSnake
                     break;
             }
 
-            //root.livelli.Add(livello);
-
-            //livello.numLev = int.Parse(System.IO.File.ReadAllText("numLev.txt")); //Usare qualcosa di simile per tenere conto del numero dei livelli crescente
-
-            //Root root = new Root();
-            //root.livelli.Add(livello);
-
-            //string strSerializedForJson = JsonConvert.SerializeObject(livello);
-
-            //Console.WriteLine(file);  //Debug
-
-
             //Per il momento il file viene scritto solo quando si chiude la form, bisogna trovare il modo di 1. aggiungere al file già esistente oppure 2. copiare tutto quello che c'è già, aggiungere e riscrivere
 
             /*
@@ -231,6 +213,7 @@ namespace EditorSnake
                 Console.WriteLine(fe.Message, "Errore", MessageBoxIcon.Error, MessageBoxButtons.OK);
             }
             */
+
         }
 
         /// <summary>
@@ -265,9 +248,8 @@ namespace EditorSnake
         /// </summary>
         private void ResizeButtons()
         {
-            btnTrasferello.Size = new Size(pnlGestioneBottoni.Size.Width / 3, pnlGestioneBottoni.Size.Height);
-            btnSalva.Size = new Size(pnlGestioneBottoni.Size.Width / 3, pnlGestioneBottoni.Size.Height);
-            btnReset.Size = new Size(pnlGestioneBottoni.Size.Width / 3, pnlGestioneBottoni.Size.Height);
+            btnTrasferello.Size = new Size(pnlGestioneBottoni.Size.Width / 2, pnlGestioneBottoni.Size.Height);
+            btnReset.Size = new Size(pnlGestioneBottoni.Size.Width / 2, pnlGestioneBottoni.Size.Height);
         }
 
         /// <summary>
@@ -297,12 +279,6 @@ namespace EditorSnake
             }
         }
 
-        /*
-        private void btnSalva_Click(object sender, EventArgs e)
-        {
-            rootNomiFile.SalvaFileNomiLivelli();
-        }
-        */
     }
 
     /// <summary>
