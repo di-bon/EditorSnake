@@ -16,12 +16,17 @@ namespace EditorSnake
     public partial class frmEditor : Form
     {
         //25, 17 è la dimensione del campo medio, in caso si può fare un menu per fare l'editor anche del campo piccolo e di quello grande
-        private int[,] mat = new int[25, 17];
-        private int sizeButton = 64;
+        private int[,] mat;
+        private int width, height, sizeButton;
+        private frmMenuEditor nomeChiamante;
         private RootNomiFile rootNomiFile;
-        public frmEditor()
+        public frmEditor(int width, int height, int sizeButton, frmMenuEditor nomeChiamante)
         {
             InitializeComponent();
+            this.width = width;
+            this.height = height;
+            this.sizeButton = sizeButton;
+            this.nomeChiamante = nomeChiamante;
         }
 
         /// <summary>
@@ -31,8 +36,10 @@ namespace EditorSnake
         /// <param name="e"></param>
         private void frmEditor_Load(object sender, EventArgs e)
         {
+            mat = new int[width, height];
             InizializzaMatriceCampo(GetMatWidth(), GetMatHeight());
             GeneraCampo(GetMatWidth(), GetMatHeight());
+            ResizeForm();
             ResizeButtons();
             rootNomiFile = new RootNomiFile();
             try
@@ -155,7 +162,22 @@ namespace EditorSnake
                 Console.Write("\n");
             }
             */
-            Livello livello = new Livello(rootNomiFile.nomeFileDaLeggere.Count);
+            DimensioneCampo dimensioneCampoEditor;
+            switch (width)
+            {
+                case 17:
+                    dimensioneCampoEditor = DimensioneCampo.Piccolo;
+                    break;
+                case 25:
+                    dimensioneCampoEditor = DimensioneCampo.Medio;
+                    break;
+                case 37:
+                    dimensioneCampoEditor = DimensioneCampo.Grande;
+                    break;
+                default:
+                    goto case 25;
+            }
+            Livello livello = new Livello(rootNomiFile.nomeFileDaLeggere.Count, dimensioneCampoEditor);
             for (int j = 0; j < GetMatHeight(); j++)
             {
                 for (int i  = 0; i < GetMatWidth(); i++)
@@ -243,6 +265,11 @@ namespace EditorSnake
             }
         }
 
+        private void ResizeForm()
+        {
+            this.Size = new Size(width * sizeButton + 20, height * sizeButton + btnTrasferello.Size.Height + 65);
+        }
+
         /// <summary>
         /// imposta la larghezza dei due bottoni inferiori. metà schermo a ciascuno
         /// </summary>
@@ -250,6 +277,11 @@ namespace EditorSnake
         {
             btnTrasferello.Size = new Size(pnlGestioneBottoni.Size.Width / 2, pnlGestioneBottoni.Size.Height);
             btnReset.Size = new Size(pnlGestioneBottoni.Size.Width / 2, pnlGestioneBottoni.Size.Height);
+        }
+
+        private void frmEditor_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            nomeChiamante.Show();
         }
 
         /// <summary>

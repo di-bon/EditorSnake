@@ -16,7 +16,7 @@ namespace EditorSnake
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmEditor());
+            Application.Run(new frmMenuEditor());
         }
     }
 }

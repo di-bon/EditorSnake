@@ -10,11 +10,13 @@ namespace EditorSnake
     {
         public int numLev;
         public IList<Muro> posMuri;
+        public DimensioneCampo dimensioneCampo;
 
-        public Livello(int numLev)
+        public Livello(int numLev, DimensioneCampo dimensioneCampo)
         {
             posMuri = new List<Muro>();
             this.numLev = numLev;
+            this.dimensioneCampo = dimensioneCampo;
         }
     }
 }
