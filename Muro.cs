@@ -13,7 +13,6 @@ namespace EditorSnake
 
         public Muro()
         {
-            //serve davvero?
         }
 
         public int X
