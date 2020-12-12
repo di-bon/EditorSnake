@@ -178,9 +178,9 @@ namespace EditorSnake
                     goto case 25;
             }
             Livello livello = new Livello(rootNomiFile.nomeFileDaLeggere.Count, dimensioneCampoEditor);
-            for (int j = 0; j < GetMatHeight(); j++)
+            for (int i = 0; i < GetMatWidth(); i++)
             {
-                for (int i  = 0; i < GetMatWidth(); i++)
+                for (int j = 0; j < GetMatHeight(); j++)
                 {
                     if (mat[i, j] == 1)
                     {
