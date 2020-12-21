@@ -20,6 +20,7 @@ namespace EditorSnake
         private int width, height, sizeButton;
         private frmMenuEditor nomeChiamante;
         private RootNomiFile rootNomiFile;
+        private Point posHead;
         public frmEditor(int width, int height, int sizeButton, frmMenuEditor nomeChiamante)
         {
             InitializeComponent();
@@ -106,6 +107,12 @@ namespace EditorSnake
                             mat[x, y] = 1;
                             b.BackColor = Color.White;
                         }
+                        else if (mat[x, y] == 1)
+                        {
+                            mat[x, y] = 2;
+                            b.BackColor = Color.Orange;
+                            posHead = new Point(x, y);
+                        }
                         else
                         {
                             mat[x, y] = 0;
@@ -177,7 +184,7 @@ namespace EditorSnake
                 default:
                     goto case 25;
             }
-            Livello livello = new Livello(rootNomiFile.nomeFileDaLeggere.Count, dimensioneCampoEditor);
+            Livello livello = new Livello(rootNomiFile.nomeFileDaLeggere.Count, dimensioneCampoEditor, posHead);
             for (int i = 0; i < GetMatWidth(); i++)
             {
                 for (int j = 0; j < GetMatHeight(); j++)
@@ -310,7 +317,6 @@ namespace EditorSnake
                 GeneraCampo(GetMatWidth(), GetMatHeight());
             }
         }
-
     }
 
     /// <summary>
