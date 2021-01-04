@@ -45,6 +45,8 @@ namespace EditorSnake
             rootNomiFile = new RootNomiFile();
             try
             {
+                if (!Directory.Exists("levels"))
+                    Directory.CreateDirectory("levels");
                 StreamReader reader = new StreamReader("levels/indice_livelli.json");
                 rootNomiFile = JsonConvert.DeserializeObject<RootNomiFile>(reader.ReadToEnd());
                 reader.Close();
